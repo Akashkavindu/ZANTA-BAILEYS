@@ -28,7 +28,4 @@ Optimized specifically to power the **ZANTA-MD** WhatsApp bot framework.
 
 ## 🛠️ Installation
 
-You can install this custom core directly from this GitHub repository into your project:
-
-```bash
-npm install git+[https://github.com/zantatest-creator/ZANTA-BAILEYS.git#main](https://github.com/zantatest-creator/ZANTA-BAILEYS.git#main)
+npm install @zanta/baileys
