@@ -15,7 +15,7 @@
 
 **ZANTA-BAILEYS** is a modified, **100% pure & clean custom fork** of Baileys. All hidden tracking endpoints, background data collection, and annoying developer auto-follow newsletter scripts have been completely stripped out to ensure maximum privacy, safety, and background performance for your automated bots.
 
-Optimized specifically to power the **ZANTA-MD** WhatsApp bot framework.
+Optimized specifically to power the **ZANTA-MINI** WhatsApp bot framework.
 
 ---
 
