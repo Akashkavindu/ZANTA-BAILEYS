@@ -1,4 +1,5 @@
-<center><img src="https://github.com/user-attachments/assets/a55539bd-768a-4d89-a4cf-c22fff7315d1" alt="ZANTA-BAILEYS" height="90" /> </center>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a55539bd-768a-4d89-a4cf-c22fff7315d1" alt="ZANTA-BAILEYS" height="75" />
   
   <h1>ZANTA-BAILEYS</h1>
   
