@@ -172,7 +172,7 @@ await sock.sendMessage(jid, {
     ],
     headerType: 1,
     viewOnce: true
-}, { quoted: m })
+}
 
 ## 🔗 URL Buttons
 
