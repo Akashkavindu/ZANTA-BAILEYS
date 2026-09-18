@@ -321,52 +321,13 @@ sock.ev.on('messages.upsert', async ({ messages, type }) => {
 
 ## 📢 Channel Media
 
-### 📷 Send Image to Channel
-
-```javascript
-const channelJid = '120363406265537739@newsletter'
-
-await sock.sendMessage(channelJid, {
-    image: { url: 'https://example.com/image.jpg' },
-    caption: '📸 *New post!*'
-})
-```
-
-### 🎬 Send Video to Channel
-
-```javascript
-await sock.sendMessage(channelJid, {
-    video: { url: 'https://example.com/video.mp4' },
-    caption: '🎬 *Check this out!*'
-})
-```
-
 ### 🎵 Send Audio to Channel
 
 ```javascript
-await sock.sendMessage(channelJid, {
+await sock.newsletterSendMedia(channelJid, {
     audio: { url: 'https://example.com/audio.mp3' },
-    mimetype: 'audio/mp4',
+    mimetype: 'audio/mp3',
     ptt: false
-})
-```
-
-### 📄 Send Document to Channel
-
-```javascript
-await sock.sendMessage(channelJid, {
-    document: { url: 'https://example.com/file.pdf' },
-    mimetype: 'application/pdf',
-    fileName: 'Guide.pdf',
-    caption: '📄 *Download!*'
-})
-```
-
-### 📝 Send Text to Channel
-
-```javascript
-await sock.sendMessage(channelJid, {
-    text: '📢 *Announcement*\n\nZANTA-BAILEYS v1.0.0 Released! 🎉'
 })
 ```
 
@@ -467,10 +428,6 @@ sock.ev.on('creds.update', saveCreds)
 ---
 
 <div align="center">
-  <p>Made with ❤️ by <a href="https://github.com/Akashkavindu">Akash Kavindu</a></p>
-  <p>
-    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/stargazers">⭐ Star us</a> •
-    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/fork">🍴 Fork</a> •
-    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/issues">🐛 Report Bug</a>
-  </p>
+  <p>Made with ❤️ byAkash Kavindu</p>
+
 </div>
