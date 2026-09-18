@@ -150,6 +150,7 @@ async function connectToWhatsApp() {
 connectToWhatsApp()
 
 ## 🎨 Buttons
+```javascript
 await sock.sendMessage(jid, {
     text: '🎯 *Choose an option:*',
     footer: 'ZANTA-BAILEYS',
@@ -173,9 +174,9 @@ await sock.sendMessage(jid, {
     headerType: 1,
     viewOnce: true
 }
-
+```
 ## 🔗 URL Buttons
-
+```javascript
 await sock.sendMessage(jid, {
     text: '🌐 *Visit our website:*',
     footer: 'ZANTA-BAILEYS',
@@ -188,9 +189,9 @@ await sock.sendMessage(jid, {
     ],
     headerType: 1
 })
-
+```
 ## 📋 List Message (Menu)
-
+```javascript
 await sock.sendMessage(jid, {
     text: '📋 *Main Menu*\n\nPlease select an option below:',
     footer: '© ZANTA-BAILEYS',
@@ -222,9 +223,9 @@ await sock.sendMessage(jid, {
         }
     ]
 }, { quoted: m })
-
+```
 ## 📨 Handle Button Responses
-
+```javascript
 sock.ev.on('messages.upsert', async ({ messages, type }) => {
     const m = messages[0]
     if (!m.message) return
@@ -264,9 +265,9 @@ sock.ev.on('messages.upsert', async ({ messages, type }) => {
         console.log(`Template clicked: ${templateResponse.selectedId}`)
     }
 })
-
+```
 ## 📷 Send Image to Channel
-
+```javascript
 const channelJid = '120363406265537739@newsletter'
 
 await sock.newsletterSendMedia(channelJid, {
@@ -282,10 +283,10 @@ await sock.sendMessage(jid, {
         key: m.key
     }
 })
-
+```
 ## 🛠️ Core API
 📨 Messaging
-
+```javascript
 await sock.sendMessage(jid, { text: 'Hi' })           // Text
 await sock.sendMessage(jid, { image: { url } })       // Image
 await sock.sendMessage(jid, { video: { url } })       // Video
@@ -295,9 +296,9 @@ await sock.sendMessage(jid, { sticker: { url } })     // Sticker
 await sock.sendMessage(jid, { react: { text, key } }) // Reaction
 await sock.sendMessage(jid, { delete: msg.key })      // Delete
 await sock.sendMessage(jid, { edit: msg.key, text })  // Edit
-
+```
 👥 Groups
-
+```javascript
 await sock.groupCreate(name, participants)
 await sock.groupParticipantsUpdate(jid, [user], 'add')
 await sock.groupUpdateSubject(jid, 'New Name')
@@ -306,9 +307,9 @@ await sock.groupSettingUpdate(jid, 'announcement')
 await sock.groupLeave(jid)
 await sock.groupMetadata(jid)
 await sock.groupInviteCode(jid)
-
+```
 ## 🔐 Session Management
-
+```javascript
 import { useMultiFileAuthState } from '@zanta/baileys'
 
 const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys')
@@ -317,9 +318,9 @@ const sock = makeWASocket({ auth: state })
 
 // Save credentials on every update
 sock.ev.on('creds.update', saveCreds)
-
+```
 ##📚 Documentation
-
+```javascript
 Events
 Event	                             Description
 connection.update	                 Connection state changes (open, close, connecting)
@@ -331,7 +332,7 @@ groups.update	                     Group metadata changes
 group-participants.update	         Group members added/removed/promoted
 call	                             Incoming call events
 presence.update	                   Contact presence (online, typing)
-
+```
 ## 🙏 Credits
 
 Original Baileys by @WhiskeySockets
