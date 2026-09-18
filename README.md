@@ -1,6 +1,4 @@
-<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/93835eb8-4375-4391-bf7b-834913b526a7" /><div align="center">
-  <img src="<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/a55539bd-768a-4d89-a4cf-c22fff7315d1" />
-" alt="ZANTA-BAILEYS" height="90" />
+<img src="https://github.com/user-attachments/assets/a55539bd-768a-4d89-a4cf-c22fff7315d1" alt="ZANTA-BAILEYS" height="75" />
   
   <h1>ZANTA-BAILEYS</h1>
   
