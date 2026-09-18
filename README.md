@@ -18,10 +18,10 @@
     <a href="#-overview">Overview</a> •
     <a href="#-features">Features</a> •
     <a href="#-installation">Installation</a> •
-    <a href="#-connecting-your-bot">Connect Bot</a> •
+    <a href="#-connecting">Connect Bot</a> •
     <a href="#-buttons">Buttons</a> •
     <a href="#-channel-media">Channel Media</a> •
-    <a href="#-usage">Usage</a> •
+    <a href="#-core-api">Core API</a> •
     <a href="#-support">Support</a>
   </p>
 </div>
@@ -60,9 +60,46 @@ Optimized specifically to power the **ZANTA-MINI** WhatsApp bot framework.
 
 ## 📦 Installation
 
+```bash
 npm install @zanta/baileys
+```
 
-## 🔌 Connectiong
+---
+
+## 🔌 Connecting
+
+### 📱 Method 1: QR Code
+
+```javascript
+import makeWASocket, { useMultiFileAuthState } from '@zanta/baileys'
+import P from 'pino'
+
+async function startBot() {
+    const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys')
+
+    const sock = makeWASocket({
+        auth: state,
+        logger: P({ level: 'silent' }),
+        printQRInTerminal: true,
+        browser: ['ZANTA-BAILEYS', 'Chrome', '1.0.0']
+    })
+
+    sock.ev.on('creds.update', saveCreds)
+
+    sock.ev.on('connection.update', ({ connection }) => {
+        if (connection === 'open') {
+            console.log('✅ Bot connected!')
+        }
+    })
+
+    return sock
+}
+
+startBot()
+```
+
+### 🔢 Method 2: Pairing Code
+
 ```javascript
 import makeWASocket, { useMultiFileAuthState } from '@zanta/baileys'
 import P from 'pino'
@@ -73,12 +110,12 @@ async function startBotWithPairing() {
     const sock = makeWASocket({
         auth: state,
         logger: P({ level: 'silent' }),
-        printQRInTerminal: false,    
+        printQRInTerminal: false,
         browser: ['ZANTA-BAILEYS', 'Chrome', '1.0.0']
     })
 
     if (!sock.authState.creds.registered) {
-        const phoneNumber = '9477xxxxx' 
+        const phoneNumber = '94771234567'
         const pairingCode = await sock.requestPairingCode(phoneNumber)
         console.log('🔢 Your Pairing Code:', pairingCode)
     }
@@ -96,7 +133,9 @@ async function startBotWithPairing() {
 
 startBotWithPairing()
 ```
-## 🔄 Auto Reconnect with Error Handling
+
+### 🔄 Auto Reconnect
+
 ```javascript
 import makeWASocket, { 
     useMultiFileAuthState, 
@@ -130,10 +169,10 @@ async function connectToWhatsApp() {
             const statusCode = (lastDisconnect?.error as Boom)?.output?.statusCode
             const shouldReconnect = statusCode !== DisconnectReason.loggedOut
 
-            console.log(`❌ Disconnected. Code: ${statusCode}. Reconnecting: ${shouldReconnect}`)
+            console.log(`❌ Disconnected. Code: ${statusCode}`)
 
             if (shouldReconnect) {
-                setTimeout(() => connectToWhatsApp(), 3000)  // 3s delay එකකින් retry
+                setTimeout(() => connectToWhatsApp(), 3000)
             } else {
                 console.log('🚪 Logged out. Please scan QR again.')
             }
@@ -149,7 +188,13 @@ async function connectToWhatsApp() {
 
 connectToWhatsApp()
 ```
+
+---
+
 ## 🎨 Buttons
+
+### 🔘 Simple Buttons
+
 ```javascript
 await sock.sendMessage(jid, {
     text: '🎯 *Choose an option:*',
@@ -171,11 +216,12 @@ await sock.sendMessage(jid, {
             type: 1
         }
     ],
-    headerType: 1,
-    viewOnce: true
-}
+    headerType: 1
+}, { quoted: m })
 ```
-## 🔗 URL Buttons
+
+### 🔗 URL Buttons
+
 ```javascript
 await sock.sendMessage(jid, {
     text: '🌐 *Visit our website:*',
@@ -190,7 +236,9 @@ await sock.sendMessage(jid, {
     headerType: 1
 })
 ```
-## 📋 List Message (Menu)
+
+### 📋 List Message (Menu)
+
 ```javascript
 await sock.sendMessage(jid, {
     text: '📋 *Main Menu*\n\nPlease select an option below:',
@@ -224,7 +272,9 @@ await sock.sendMessage(jid, {
     ]
 }, { quoted: m })
 ```
-## 📨 Handle Button Responses
+
+### 📨 Handle Button Responses
+
 ```javascript
 sock.ev.on('messages.upsert', async ({ messages, type }) => {
     const m = messages[0]
@@ -259,24 +309,72 @@ sock.ev.on('messages.upsert', async ({ messages, type }) => {
             await sock.sendMessage(m.key.remoteJid, { text: '👤 *Your Profile*\nName: User' })
         }
     }
-    
+
     const templateResponse = m.message?.templateButtonReplyMessage
     if (templateResponse) {
         console.log(`Template clicked: ${templateResponse.selectedId}`)
     }
 })
 ```
-## 📷 Send Image to Channel
+
+---
+
+## 📢 Channel Media
+
+### 📷 Send Image to Channel
+
 ```javascript
 const channelJid = '120363406265537739@newsletter'
 
-await sock.newsletterSendMedia(channelJid, {
-    audio: { url: 'https://example.com/image.jpg' },
-    mimetype: 'audio/ogg; codecs=opus'
+await sock.sendMessage(channelJid, {
+    image: { url: 'https://example.com/image.jpg' },
+    caption: '📸 *New post!*'
 })
+```
+
+### 🎬 Send Video to Channel
+
+```javascript
+await sock.sendMessage(channelJid, {
+    video: { url: 'https://example.com/video.mp4' },
+    caption: '🎬 *Check this out!*'
+})
+```
+
+### 🎵 Send Audio to Channel
+
+```javascript
+await sock.sendMessage(channelJid, {
+    audio: { url: 'https://example.com/audio.mp3' },
+    mimetype: 'audio/mp4',
+    ptt: false
+})
+```
+
+### 📄 Send Document to Channel
+
+```javascript
+await sock.sendMessage(channelJid, {
+    document: { url: 'https://example.com/file.pdf' },
+    mimetype: 'application/pdf',
+    fileName: 'Guide.pdf',
+    caption: '📄 *Download!*'
+})
+```
+
+### 📝 Send Text to Channel
+
+```javascript
+await sock.sendMessage(channelJid, {
+    text: '📢 *Announcement*\n\nZANTA-BAILEYS v1.0.0 Released! 🎉'
+})
+```
+
+---
 
 ## 💖 Send Reaction
 
+```javascript
 await sock.sendMessage(jid, {
     react: {
         text: '❤️',
@@ -284,8 +382,13 @@ await sock.sendMessage(jid, {
     }
 })
 ```
+
+---
+
 ## 🛠️ Core API
-📨 Messaging
+
+### 📨 Messaging
+
 ```javascript
 await sock.sendMessage(jid, { text: 'Hi' })           // Text
 await sock.sendMessage(jid, { image: { url } })       // Image
@@ -297,7 +400,9 @@ await sock.sendMessage(jid, { react: { text, key } }) // Reaction
 await sock.sendMessage(jid, { delete: msg.key })      // Delete
 await sock.sendMessage(jid, { edit: msg.key, text })  // Edit
 ```
-👥 Groups
+
+### 👥 Groups
+
 ```javascript
 await sock.groupCreate(name, participants)
 await sock.groupParticipantsUpdate(jid, [user], 'add')
@@ -308,7 +413,11 @@ await sock.groupLeave(jid)
 await sock.groupMetadata(jid)
 await sock.groupInviteCode(jid)
 ```
+
+---
+
 ## 🔐 Session Management
+
 ```javascript
 import { useMultiFileAuthState } from '@zanta/baileys'
 
@@ -316,32 +425,52 @@ const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys')
 
 const sock = makeWASocket({ auth: state })
 
-// Save credentials on every update
 sock.ev.on('creds.update', saveCreds)
 ```
-##📚 Documentation
-```javascript
-Events
-Event	                             Description
-connection.update	                 Connection state changes (open, close, connecting)
-creds.update	                     Authentication credentials updated
-messages.upsert	                   New messages received
-messages.update                    Message status updates (read, delivered)
-message-receipt.update	           Read receipts
-groups.update	                     Group metadata changes
-group-participants.update	         Group members added/removed/promoted
-call	                             Incoming call events
-presence.update	                   Contact presence (online, typing)
-```
+
+---
+
+## 📚 Documentation
+
+### Events
+
+| Event | Description |
+|:---|:---|
+| `connection.update` | Connection state changes (open, close, connecting) |
+| `creds.update` | Authentication credentials updated |
+| `messages.upsert` | New messages received |
+| `messages.update` | Message status updates (read, delivered) |
+| `message-receipt.update` | Read receipts |
+| `groups.update` | Group metadata changes |
+| `group-participants.update` | Group members added/removed/promoted |
+| `call` | Incoming call events |
+| `presence.update` | Contact presence (online, typing) |
+
+---
+
 ## 🙏 Credits
 
-Original Baileys by @WhiskeySockets
-libsignal by @signal
-All contributors who made this project possible
+- **Original Baileys** by [@WhiskeySockets](https://github.com/WhiskeySockets/Baileys)
+- **libsignal** by [@signal](https://github.com/signalapp/libsignal-protocol-javascript)
+- **All contributors** who made this project possible
+
+---
 
 ## ⚠️ Disclaimer
 
-This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with WhatsApp or any of its subsidiaries or affiliates.
-The official WhatsApp website can be found at whatsapp.com. "WhatsApp" as well as related names, marks, emblems and images are registered trademarks of their respective owners.
-Use at your own discretion. Do not spam people with this. We discourage any stalkerware, bulk or automated messaging usage.
+> This project is **not affiliated, associated, authorized, endorsed by, or in any way officially connected** with WhatsApp or any of its subsidiaries or affiliates.
+>
+> The official WhatsApp website can be found at [whatsapp.com](https://whatsapp.com). "WhatsApp" as well as related names, marks, emblems and images are registered trademarks of their respective owners.
+>
+> **Use at your own discretion.** Do not spam people with this. We discourage any stalkerware, bulk or automated messaging usage.
 
+---
+
+<div align="center">
+  <p>Made with ❤️ by <a href="https://github.com/Akashkavindu">Akash Kavindu</a></p>
+  <p>
+    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/stargazers">⭐ Star us</a> •
+    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/fork">🍴 Fork</a> •
+    <a href="https://github.com/Akashkavindu/ZANTA-BAILEYS/issues">🐛 Report Bug</a>
+  </p>
+</div>
