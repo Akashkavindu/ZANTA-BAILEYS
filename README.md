@@ -63,7 +63,7 @@ Optimized specifically to power the **ZANTA-MINI** WhatsApp bot framework.
 npm install @zanta/baileys
 
 ## 🔌 Connectiong
-
+```javascript
 import makeWASocket, { useMultiFileAuthState } from '@zanta/baileys'
 import P from 'pino'
 
@@ -95,9 +95,9 @@ async function startBotWithPairing() {
 }
 
 startBotWithPairing()
-
+```
 ## 🔄 Auto Reconnect with Error Handling
-
+```javascript
 import makeWASocket, { 
     useMultiFileAuthState, 
     DisconnectReason,
@@ -148,7 +148,7 @@ async function connectToWhatsApp() {
 }
 
 connectToWhatsApp()
-
+```
 ## 🎨 Buttons
 ```javascript
 await sock.sendMessage(jid, {
