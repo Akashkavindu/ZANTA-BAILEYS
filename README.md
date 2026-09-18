@@ -284,7 +284,7 @@ await sock.sendMessage(jid, {
 })
 
 ## 🛠️ Core API
-<details> <summary><b>📨 Messaging</b></summary>
+📨 Messaging
 
 await sock.sendMessage(jid, { text: 'Hi' })           // Text
 await sock.sendMessage(jid, { image: { url } })       // Image
@@ -296,7 +296,7 @@ await sock.sendMessage(jid, { react: { text, key } }) // Reaction
 await sock.sendMessage(jid, { delete: msg.key })      // Delete
 await sock.sendMessage(jid, { edit: msg.key, text })  // Edit
 
-</details><details> <summary><b>👥 Groups</b></summary>
+👥 Groups
 
 await sock.groupCreate(name, participants)
 await sock.groupParticipantsUpdate(jid, [user], 'add')
