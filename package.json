@@ -7,10 +7,6 @@
     "whatsapp",
     "zanta"
   ],
-  "homepage": "https://github.com/Akashkavindu/ZANTA-BAILEYS",
-  "repository": {
-    "url": "git@github.com:Akashkavindu/ZANTA-BAILEYS.git"
-  },
   "license": "MIT",
   "author": "Zanta",
   "main": "lib/index.js",
