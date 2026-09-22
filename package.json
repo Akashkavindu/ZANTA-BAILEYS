@@ -14,7 +14,8 @@
   "files": [
     "lib/**/*",
     "WAProto/**/*",
-    "engine-requirements.js"
+    "engine-requirements.js",
+    "assets/**/*",
   ],
   "dependencies": {
     "@cacheable/node-cache": "^1.4.0",
